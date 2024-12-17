@@ -1,0 +1,22 @@
+{% extends 'page.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block content %}
+<h1>Товары</h1>
+{% for item in itmes %}
+<table class="table" style="width:100%">
+    <tr>
+      <td>{{item.name}}</td>
+      <td>{{item.price}}</td>
+      <td>
+        <figure>
+          
+        </figure>
+      </td>
+    </tr>
+  </table>
+{% endfor %}
+{% endblock %}

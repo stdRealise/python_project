@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+
+</head>
+<body>
+  <h1>Настольные игры</h1>
+  
+  <form action="" method="get">
+    <input type="range">
+    <input type="search", placeholder="Введите название товара">
+    <button type="submit">Найти</button>
+  </form>
+  <table class="table" style="width:100%">
+    {% for row in itmes %}
+    <tr>
+      <td>{{ row[0] }}</td>
+      <td>{{ row[1] }}</td>
+      <td>
+        <figure>
+          
+        </figure>
+      </td>
+    </tr>
+  </table>
+  {% endfor %}
+</body>
+
+</html>
