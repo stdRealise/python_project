@@ -3,29 +3,61 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-
 </head>
 <body>
-  <h1>Настольные игры</h1>
-  
-  <form action="" method="get">
-    <input type="range">
-    <input type="search", placeholder="Введите название товара">
-    <button type="submit">Найти</button>
-  </form>
-  <table class="table" style="width:100%">
-    {% for row in itmes %}
+<div class=container>
+  <h1>Настольные игры PlayLand</h1>
+  <div class="blocks">
+  <div>
+    <form action="{{ url_for('show') }}" method="post">
+      <h4>Название товара</h4>
+      <input name="name" type="search">
+      <h4>Цена</h4>
+      <label for="price1">От:</label>
+      <input name="price1" type="search">
+      <label for="price2">До:</label>
+      <input name="price2" type="search">
+      <h4>Продолжительность</h4>
+      <label for="time1">От:</label>
+      <input name="time1" type="search">
+      <label for="time2">До:</label>
+      <input name="time2" type="search">
+      <h4>Количество игроков</h4>
+      <label for="gamers1">От:</label> 
+      <input name="gamers1" type="search">
+      <label for="gamers2">До:</label>
+      <input name="gamers2" type="search">
+      <h4>Возрастные ограничения</h4>
+      <input name="age" type="search">
+      <button type="submit">Найти</button>
+    </form>
+    <a href="{{ url_for('games') }}"><button>Отмена</button></a>
+    </div>
+    <div class="info">
+      {{ query }}
+    </div>
+  </div>
+  <table>
     <tr>
-      <td>{{ row[0] }}</td>
-      <td>{{ row[1] }}</td>
-      <td>
-        <figure>
-          
-        </figure>
-      </td>
+      <td><b>№</b></td>
+      <td><b>Название</b></td>
+      <td><b>Цена</b></td>
+      <td><b>Продолжительность</b></td>
+      <td><b>Количество игроков</b></td>
+      <td><b>Возраст</b></td>
     </tr>
+    {% for i in range(count) %}
+    <tr>
+      <td>{{ i + 1 }}</td>
+      <td>{{ items[i][0] }}</br>
+        <a href={{ items[i][6] }}>Купить</a>
+      </td>
+      <td>{{ items[i][1] }} ₽</td>
+      <td>{{ items[i][2] }} мин.</td>
+      <td>{{ items[i][3] }} – {{ items[i][4] }}</td>
+      <td>{{ items[i][5] }}+</td>
+    {% endfor %}
   </table>
-  {% endfor %}
+</div>
 </body>
-
 </html>
