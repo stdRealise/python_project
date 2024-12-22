@@ -1,7 +1,6 @@
 import requests
-import lxml
 from bs4 import BeautifulSoup
-from db_f import conn_db, add_item, create_db
+from db_functions import conn_db, add_item
 
 
 def get_digits(s):
@@ -20,7 +19,6 @@ def get_digits(s):
 
 
 def scrap():
-    create_db()
     conn = conn_db()
     cursor = conn.cursor()
     for page in range(1, 12):
@@ -32,17 +30,21 @@ def scrap():
             name_ref = card.find('a', class_='woocommerce-loop-product__link')
             name = name_ref.text
             ref = name_ref.get('href')
-            price = card.find('span', class_='woocommerce-Price-amount amount').text.replace(',','')[1:]
-            l = card.find_all('p')
-            time = get_digits(l[0].text)[0]
-            gamers = get_digits(l[1].text)
+            price = card.find(
+                'span', class_='woocommerce-Price-amount amount'
+            ).text.replace(',', '')[1:]
+            lst = card.find_all('p')
+            time = get_digits(lst[0].text)[0]
+            gamers = get_digits(lst[1].text)
             gamers1 = gamers[0]
             if len(gamers) == 2:
                 gamers2 = gamers[1]
             else:
                 gamers2 = 20
-            age = get_digits(l[2].text)[0]
-            add_item(conn, cursor, name, price, time, gamers1, gamers2, age, ref)
+            age = get_digits(lst[2].text)[0]
+            add_item(
+                conn, cursor, name, price, time, gamers1, gamers2, age, ref
+            )
             conn.commit()
     cursor.close()
     conn.close()
