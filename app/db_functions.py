@@ -72,3 +72,42 @@ def execute_db(query):
     conn.close()
     return res
 
+
+def res_db(data):
+    query = ''
+    if (data['price1'] and data['price2']) and (data['price1'].isnumeric() and \
+        data['price2'].isnumeric()) and int(data['price1']) <= int(
+        data['price2']
+    ):
+        query += (
+            select_between_db('price', data['price1'], data['price2'])
+            + ' INTERSECT '
+        )
+    if data['time1'] and data['time2'] and (data['time1'].isnumeric() and \
+        data['time2'].isnumeric()) and int(data['time1']) <= int(
+        data['time2']
+    ):
+        query += (
+            select_between_db('time', data['time1'], data['time2'])
+            + ' INTERSECT '
+        )
+    if data['gamers1'] and data['gamers2'] and (data['gamers1'].isnumeric() and \
+        data['gamers2'].isnumeric()) and int(data['gamers1']) <= int(
+        data['gamers2']
+    ):
+        query += (
+            select_between_db('gamers2', data['gamers1'], data['gamers2'])
+            + ' INTERSECT '
+        )
+    if data['age'] and data['age'].isnumeric():
+        query += (
+            select_age('age', data['age'])
+            + ' UNION '
+            + select_age('age', data['age'])
+            + ' INTERSECT '
+        )
+    if data['name']:
+        query += select_name(data['name']) + ' INTERSECT '
+    query += sort_db()
+    return execute_db(query)[:20]
+
